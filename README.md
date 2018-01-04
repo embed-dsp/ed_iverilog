@@ -31,12 +31,8 @@ Build
 # Checkout specific version and rebuild configure.
 make prepare
 
-# Configure source code for 64-bit compile (Default: M=64).
+# Configure source code.
 make configure
-make configure M=64
-
-# Configure source code for 32-bit compile.
-make configure M=32
 
 # Compile source code using 4 simultaneous jobs (Default: J=4).
 make compile
@@ -55,7 +51,7 @@ The build products are installed in the following locations:
 opt
 └── iverilog
     └── iverilog-v10_2
-        ├── include         # Include files.
+        ├── include         # Include directory.
         │   ├── iverilog
         │       ...
         ├── linux_x86_64    # 64-bit binaries and libraries for Linux
@@ -63,7 +59,7 @@ opt
         │   │   ├── iverilog
         │   │   ├── vvp
         │   │   ...
-        │   └── lib
+        │   └── lib         # Library directory.
         │       ├── libveriuser.a
         │       ├── libvpi.a
         │           ...
@@ -72,7 +68,7 @@ opt
         │   │   ├── iverilog
         │   │   ├── vvp
         │   │   ...
-        │   └── lib
+        │   └── lib         # Library directory.
         │       ├── libveriuser.a
         │       ├── libvpi.a
         │           ...
@@ -82,3 +78,6 @@ opt
 
 Notes
 =====
+
+This has been testes with the following Linux distributions and compilers:
+* `Fedora-27 (64-bit)` and `gcc-7.2.1`
