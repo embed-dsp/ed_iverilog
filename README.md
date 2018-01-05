@@ -2,27 +2,31 @@
 Compile and Install of the Icarus Verilog Tool
 ==============================================
 
-This repository contains make file for easy compile and install of the Icarus Verilog Tool.
+This repository contains make file for easy compile and install of [Icarus Verilog](http://iverilog.icarus.com).
 Icarus Verilog is a verilog compilation and simulation system.
 
-Get tool and source code
-========================
+Get Source Code
+===============
 
 ## ed_iverilog
 ```bash
 git clone https://github.com/embed-dsp/ed_iverilog.git
 ```
 
-## Icarus Verilog Source
+## Icarus Verilog
 ```bash
 # Enter the ed_iverilog directory.
 cd ed_iverilog
 
-# Clone Icarus Verilog repository.
+# Clone the Icarus Verilog git repository.
 make clone
 
-# Pull latest updates from Icarus Verilog repository.
+# Pull latest updates from the Icarus Verilog git repository.
 make pull
+
+# Edit the Makefile for selecting the Icarus Verilog source version.
+vim Makefile
+PACKAGE_VERSION = v10_2
 ```
 
 Build
@@ -72,7 +76,7 @@ opt
         │       ├── libveriuser.a
         │       ├── libvpi.a
         │           ...
-        └── share           # ...
+        └── share           # Architecture independent data files.
             ...
 ```
 
