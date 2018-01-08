@@ -7,9 +7,6 @@
 # $Revision: $
 
 
-CXX = /usr/bin/g++
-# CC = /usr/bin/gcc
-
 PACKAGE_NAME = iverilog
 
 # Package version number (git master branch / git tag)
@@ -18,8 +15,23 @@ PACKAGE_VERSION = v10_2
 
 PACKAGE = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 
+# Build for 32-bit or 64-bit (Default)
+ifeq ($(M),)
+	M = 64
+endif
+
+ifeq ($(M),64)
+	# CXXFLAGS = -Wall -O2 -m64
+	CONFIGURE_FLAGS =
+else
+	# CXXFLAGS = -Wall -O2 -m32
+	CONFIGURE_FLAGS = --with-m32
+endif
+
+CXX = /usr/bin/g++
+
 # Architecture.
-ARCH = $(shell ./bin/get_arch.sh)
+ARCH = $(shell ./bin/get_arch.sh $(M))
 
 # Installation.
 PREFIX = /opt/iverilog/$(PACKAGE)
@@ -39,7 +51,7 @@ all:
 	@echo ""
 	@echo "## Build"
 	@echo "make prepare"
-	@echo "make configure"
+	@echo "make configure [M=...]"
 	@echo "make compile [J=...]"
 	@echo ""
 	@echo "## Install"
@@ -79,7 +91,7 @@ prepare:
 
 .PHONY: configure
 configure:
-	cd $(PACKAGE_NAME) && ./configure CXX=$(CXX) CXXFLAGS=$(CXXFLAGS) --prefix=$(PREFIX) --exec_prefix=$(EXEC_PREFIX)
+	cd $(PACKAGE_NAME) && ./configure CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" --prefix=$(PREFIX) --exec_prefix=$(EXEC_PREFIX) $(CONFIGURE_FLAGS)
 
 
 .PHONY: compile

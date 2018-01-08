@@ -35,8 +35,12 @@ Build
 # Checkout specific version and rebuild configure.
 make prepare
 
-# Configure source code.
+# Configure source code for 64-bit compile (Default: M=64).
 make configure
+make configure M=64
+
+# Configure source code for 32-bit compile.
+make configure M=32
 
 # Compile source code using 4 simultaneous jobs (Default: J=4).
 make compile
@@ -52,31 +56,31 @@ sudo make install
 
 The build products are installed in the following locations:
 ```bash
-opt
-└── iverilog
-    └── iverilog-v10_2
-        ├── include         # Include directory.
+opt/
+└── iverilog/
+    └── iverilog-v10_2/
+        ├── include/        # Include directory.
         │   ├── iverilog
         │       ...
-        ├── linux_x86_64    # 64-bit binaries and libraries for Linux
-        │   ├── bin
+        ├── linux_x86_64/   # 64-bit binaries and libraries for Linux
+        │   ├── bin/
         │   │   ├── iverilog
         │   │   ├── vvp
         │   │   ...
-        │   └── lib         # Library directory.
+        │   └── lib/        # Library directory.
         │       ├── libveriuser.a
         │       ├── libvpi.a
         │           ...
-        ├── linux_x86       # 32-bit binaries and libraries for Linux
-        │   ├── bin
+        ├── linux_x86/      # 32-bit binaries and libraries for Linux
+        │   ├── bin/
         │   │   ├── iverilog
         │   │   ├── vvp
         │   │   ...
-        │   └── lib         # Library directory.
+        │   └── lib/        # Library directory.
         │       ├── libveriuser.a
         │       ├── libvpi.a
         │           ...
-        └── share           # Architecture independent data files.
+        └── share/          # Architecture independent data files.
             ...
 ```
 
