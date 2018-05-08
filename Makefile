@@ -33,7 +33,7 @@ CXX = /usr/bin/g++
 # Architecture.
 ARCH = $(shell ./bin/get_arch.sh $(M))
 
-# Installation.
+# Installation directories.
 PREFIX = /opt/iverilog/$(PACKAGE)
 EXEC_PREFIX = $(PREFIX)/$(ARCH)
 
