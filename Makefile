@@ -10,8 +10,8 @@
 PACKAGE_NAME = iverilog
 
 # Package version number (git master branch / git tag)
-# PACKAGE_VERSION = master
-PACKAGE_VERSION = v10_2
+PACKAGE_VERSION = master
+# PACKAGE_VERSION = v10_2
 
 PACKAGE = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 
@@ -20,27 +20,57 @@ ifeq ($(M),)
 	M = 64
 endif
 
-ifeq ($(M),64)
-	# CXXFLAGS = -Wall -O2 -m64
-	CONFIGURE_FLAGS =
-else
-	# CXXFLAGS = -Wall -O2 -m32
-	CONFIGURE_FLAGS = --with-m32
-endif
-
-CXX = /usr/bin/g++
-
-# Architecture.
-ARCH = $(shell ./bin/get_arch.sh $(M))
-
-# Installation directories.
-PREFIX = /opt/iverilog/$(PACKAGE)
-EXEC_PREFIX = $(PREFIX)/$(ARCH)
-
 # Set number of simultaneous jobs (Default 4)
 ifeq ($(J),)
 	J = 4
 endif
+
+# Kernel.
+KERN = $(shell ./bin/get_kernel.sh)
+
+# Machine.
+MACH = $(shell ./bin/get_machine.sh $(M))
+
+# Architecture.
+ARCH = $(KERN)_$(MACH)
+
+# Compiler.
+CXX = /usr/bin/g++
+CXXFLAGS = -Wall -O2
+
+# ...
+CONFIGURE_FLAGS =
+
+# Installation directory.
+PREFIX = /opt/iverilog/$(PACKAGE)
+
+ifeq ($(M),64)
+	# CXXFLAGS += -m64
+	CONFIGURE_FLAGS =
+else
+	# CXXFLAGS += -m32
+	CONFIGURE_FLAGS += --with-m32
+endif
+
+# MinGW specifics.
+ifeq ($(KERN),mingw32)
+	CXX = /mingw/bin/g++
+	PREFIX = /c/opt/iverilog/$(PACKAGE)
+endif
+
+# MinGW-W64 specifics.
+ifeq ($(KERN),mingw64)
+	CXX = /mingw64/bin/g++
+	PREFIX = /c/opt/iverilog/$(PACKAGE)
+endif
+
+# Cygwin specifics.
+ifeq ($(KERN),cygwin)
+	PREFIX = /cygdrive/c/opt/iverilog/$(PACKAGE)
+endif
+
+# ...
+EXEC_PREFIX = $(PREFIX)/$(ARCH)
 
 
 all:
@@ -58,8 +88,8 @@ all:
 	@echo "sudo make install"
 	@echo ""
 	@echo "## Cleanup"
-	@echo "make distclean"
 	@echo "make clean"
+	@echo "make distclean"
 	@echo ""
 
 

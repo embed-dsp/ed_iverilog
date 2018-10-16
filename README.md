@@ -7,6 +7,24 @@ Icarus Verilog is a verilog compilation and simulation system.
 
 # Prerequisites
 
+## MinGW-W64
+```
+FIXME: ...
+```
+
+## Cygwin 32-bit / 64-bit
+
+```
+make
+gcc-g++
+autoconf
+gperf
+flex
+bison
+zlib
+libbz2
+```
+
 ## Fedora-27 64-bit | Fedora-28 64-bit
 
 ```
@@ -66,6 +84,11 @@ make configure M=64
 
 # Configure source code for 32-bit compile.
 make configure M=32
+```
+
+```bash
+# Clean any old build artifacts before compiling.
+make clean
 ```
 
 ```bash
