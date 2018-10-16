@@ -34,42 +34,51 @@ MACH = $(shell ./bin/get_machine.sh $(M))
 # Architecture.
 ARCH = $(KERN)_$(MACH)
 
-# Compiler.
-CXX = /usr/bin/g++
-CXXFLAGS = -Wall -O2
-
 # ...
 CONFIGURE_FLAGS =
 
-# Installation directory.
-PREFIX = /opt/iverilog/$(PACKAGE)
-
-ifeq ($(M),64)
-	# CXXFLAGS += -m64
-	CONFIGURE_FLAGS =
-else
-	# CXXFLAGS += -m32
+ifeq ($(M),32)
+	# FIXME: (32-bit) application running on x86_64 (64-bit) kernel
 	CONFIGURE_FLAGS += --with-m32
 endif
 
-# MinGW specifics.
-ifeq ($(KERN),mingw32)
-	CXX = /mingw/bin/g++
-	PREFIX = /c/opt/iverilog/$(PACKAGE)
-endif
+# Compiler.
+CXXFLAGS = -Wall -O2
 
-# MinGW-W64 specifics.
-ifeq ($(KERN),mingw64)
-	CXX = /mingw64/bin/g++
-	PREFIX = /c/opt/iverilog/$(PACKAGE)
+# Linux specifics.
+ifeq ($(KERN),linux)
+	# Compiler.
+	CXX = /usr/bin/g++
+	# Installation directory.
+	INSTALL_DIR = /opt
 endif
 
 # Cygwin specifics.
 ifeq ($(KERN),cygwin)
-	PREFIX = /cygdrive/c/opt/iverilog/$(PACKAGE)
+	# Compiler.
+	CXX = /usr/bin/g++
+	# Installation directory.
+	INSTALL_DIR = /cygdrive/c/opt
 endif
 
-# ...
+# MinGW specifics.
+ifeq ($(KERN),mingw32)
+	# Compiler.
+	CXX = /mingw/bin/g++
+	# Installation directory.
+	INSTALL_DIR = /c/opt
+endif
+
+# MinGW-W64 specifics.
+ifeq ($(KERN),mingw64)
+	# Compiler.
+	CXX = /mingw64/bin/g++
+	# Installation directory.
+	INSTALL_DIR = /c/opt
+endif
+
+# Installation directory.
+PREFIX = $(INSTALL_DIR)/iverilog/$(PACKAGE)
 EXEC_PREFIX = $(PREFIX)/$(ARCH)
 
 
