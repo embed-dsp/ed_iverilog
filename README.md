@@ -15,33 +15,38 @@ This **make** file can build the GTKWave tool on the following systems:
 # Get Source Code
 
 ## ed_iverilog
+Get the code for this component to a local directory on your PC.
 
 ```bash
 git clone https://github.com/embed-dsp/ed_iverilog.git
 ```
 
 ## Icarus Verilog
+Get the code for Icarus Verilog.
 
 ```bash
 # Enter the ed_iverilog directory.
 cd ed_iverilog
+```
 
-# FIXME: Only first time
+If this is the first time Icarus Verilog is built, then ...
+```bash
 # Clone the Icarus Verilog git repository.
 make clone
+```
 
-# FIXME: Any other time
+Otherwise just pull the latest updates ...
+```bash
 # Pull latest updates from the Icarus Verilog git repository.
 make pull
 ```
 
+Edit the **Makefile** for selecting the Icarus Verilog source version.
 ```bash
-# FIXME: Check for available versions
-cd iverilog
-git tag
-
-# Edit the Makefile for selecting the Icarus Verilog source version.
+# Edit Makefile ...
 vim Makefile
+
+# ... and set the Icarus Verilog source version.
 PACKAGE_VERSION = v10_2
 ```
 
@@ -70,7 +75,9 @@ make clean
 ```bash
 # Compile source code using 4 simultaneous jobs (Default).
 make compile
+```
 
+```bash
 # Compile source code using 2 simultaneous jobs.
 make compile J=2
 ```
@@ -78,23 +85,19 @@ make compile J=2
 
 # Install
 
+## Linux
+
 ```bash
 # Install build products.
-# FIXME: linux, arm, ...
 sudo make install
-
-# Install build products.
-# FIXME: mingw32, mingw64, ...
-make install
 ```
 
 The Icarus Verilog package installs correctly according to the
 [GNU Coding Standards](https://www.gnu.org/prep/standards/standards.html).
 The build products are installed in the following locations:
 
-FIXME: linux, arm, ...
 ```bash
-opt/
+/opt/
 └── iverilog/
     └── iverilog-v10_2/     # prefix:
         ├── include/        # includedir: Include directory.
@@ -122,24 +125,52 @@ opt/
             ...
 ```
 
-FIXME: windows 64-bit, mingw32, mingw64
+## Windows: MSYS2/mingw64 & MSYS2/mingw32
+
+```bash
+# Install build products.
+make install
+```
+
+The Icarus Verilog package installs correctly according to the
+[GNU Coding Standards](https://www.gnu.org/prep/standards/standards.html).
+The build products are installed in the following locations:
+
+```bash
+/c/opt/
+└── iverilog/
+    └── ...
+```
+
+## Windows: Cygwin
+
+```bash
+# Install build products.
+make install
+```
+
+The Icarus Verilog package installs correctly according to the
+[GNU Coding Standards](https://www.gnu.org/prep/standards/standards.html).
+The build products are installed in the following locations:
+
+```bash
+/cygdrive/c/opt/
+└── iverilog/
+    └── ...
+```
 
 
 # Tested System Configurations
 
+The following system configurations have been tested.
+
 System  | M=                | M=32  
 --------|-------------------|-------------------
+linux   | Fedora-27 64-bit  | Fedora-27 64-bit
 linux   | Fedora-28 64-bit  | Fedora-28 64-bit
 mingw64 | Windows-10 64-bit |
 mingw32 | Windows-10 64-bit |
 cygwin  | **FIXME**         |
-
-This has been testes with the following Linux distributions and compilers:
-* `Fedora-27 (64-bit)`
-    * `gcc-7.2.1`
-    * `gcc-7.3.1`
-* `Fedora-28 (64-bit)`
-    * `gcc-8.1.1`
 
 
 # Prerequisites
@@ -152,11 +183,6 @@ dnf install autoconf
 dnf install gperf
 dnf install flex
 dnf install bison
-```
-
-## MSYS2
-```
-FIXME: ...
 ```
 
 ## Cygwin
