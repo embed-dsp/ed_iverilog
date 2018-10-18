@@ -1,39 +1,15 @@
 
 # Compile and Install of the Icarus Verilog Tool
 
-This repository contains make file for easy compile and install of [Icarus Verilog](http://iverilog.icarus.com).
+This repository contains a **make** file for easy compile and install of [Icarus Verilog](http://iverilog.icarus.com).
 Icarus Verilog is a verilog compilation and simulation system.
 
-
-# Prerequisites
-
-## MinGW-W64
-```
-FIXME: ...
-```
-
-## Cygwin 32-bit / 64-bit
-
-```
-make
-gcc-g++
-autoconf
-gperf
-flex
-bison
-zlib
-libbz2
-```
-
-## Fedora-27 64-bit | Fedora-28 64-bit
-
-```
-dnf install gcc-c++
-dnf install autoconf
-dnf install gperf
-dnf install flex
-dnf install bison
-```
+This **make** file can build the GTKWave tool on the following systems:
+* Linux
+* Windows
+    * [MSYS2](https://www.msys2.org)/mingw64
+    * [MSYS2](https://www.msys2.org)/mingw32
+    * **FIXME**: [Cygwin](https://www.cygwin.com)
 
 
 # Get Source Code
@@ -78,11 +54,11 @@ make prepare
 ```
 
 ```bash
-# Configure source code for 64-bit compile (Default: M=64).
+# Configure source code.
 make configure
-make configure M=64
 
-# Configure source code for 32-bit compile.
+# Configure source code for 32-bit compile on a 64-bit system.
+# FIXME: This fails on Fedora-28 64-bit
 make configure M=32
 ```
 
@@ -92,9 +68,11 @@ make clean
 ```
 
 ```bash
-# Compile source code using 4 simultaneous jobs (Default: J=4).
+# Compile source code using 4 simultaneous jobs (Default).
 make compile
-make compile J=4
+
+# Compile source code using 2 simultaneous jobs.
+make compile J=2
 ```
 
 
@@ -102,13 +80,19 @@ make compile J=4
 
 ```bash
 # Install build products.
+# FIXME: linux, arm, ...
 sudo make install
+
+# Install build products.
+# FIXME: mingw32, mingw64, ...
+make install
 ```
 
 The Icarus Verilog package installs correctly according to the
 [GNU Coding Standards](https://www.gnu.org/prep/standards/standards.html).
 The build products are installed in the following locations:
 
+FIXME: linux, arm, ...
 ```bash
 opt/
 └── iverilog/
@@ -138,8 +122,17 @@ opt/
             ...
 ```
 
+FIXME: windows 64-bit, mingw32, mingw64
 
-# Notes
+
+# Tested System Configurations
+
+System  | M=                | M=32  
+--------|-------------------|-------------------
+linux   | Fedora-28 64-bit  | Fedora-28 64-bit
+mingw64 | Windows-10 64-bit |
+mingw32 | Windows-10 64-bit |
+cygwin  | **FIXME**         |
 
 This has been testes with the following Linux distributions and compilers:
 * `Fedora-27 (64-bit)`
@@ -147,3 +140,34 @@ This has been testes with the following Linux distributions and compilers:
     * `gcc-7.3.1`
 * `Fedora-28 (64-bit)`
     * `gcc-8.1.1`
+
+
+# Prerequisites
+
+## Fedora-27 64-bit | Fedora-28 64-bit
+
+```
+dnf install gcc-c++
+dnf install autoconf
+dnf install gperf
+dnf install flex
+dnf install bison
+```
+
+## MSYS2
+```
+FIXME: ...
+```
+
+## Cygwin
+
+```
+make
+gcc-g++
+autoconf
+gperf
+flex
+bison
+zlib
+libbz2
+```

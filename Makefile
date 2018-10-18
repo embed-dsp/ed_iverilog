@@ -15,74 +15,69 @@ PACKAGE_VERSION = master
 
 PACKAGE = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 
-# Build for 32-bit or 64-bit (Default)
-ifeq ($(M),)
-	M = 64
-endif
-
 # Set number of simultaneous jobs (Default 4)
 ifeq ($(J),)
 	J = 4
 endif
 
-# Kernel.
-KERN = $(shell ./bin/get_kernel.sh)
+# System and Machine.
+SYSTEM = $(shell ./bin/get_system.sh)
+MACHINE = $(shell ./bin/get_machine.sh)
 
-# Machine.
-MACH = $(shell ./bin/get_machine.sh $(M))
-
-# Architecture.
-ARCH = $(KERN)_$(MACH)
-
-# ...
+# System configuration.
 CONFIGURE_FLAGS =
-
-ifeq ($(M),32)
-	# FIXME: (32-bit) application running on x86_64 (64-bit) kernel
-	CONFIGURE_FLAGS += --with-m32
-endif
 
 # Compiler.
 CXXFLAGS = -Wall -O2
 
-# Linux specifics.
-ifeq ($(KERN),linux)
+# Linux system.
+ifeq ($(SYSTEM),linux)
+	# Compile for 32-bit on a 64-bit machine.
+	ifeq ("$(MACHINE):$(M)","x86_64:32")
+		MACHINE = "x86"
+		CONFIGURE_FLAGS += --with-m32
+	endif
 	# Compiler.
 	CXX = /usr/bin/g++
 	# Installation directory.
 	INSTALL_DIR = /opt
 endif
 
-# Cygwin specifics.
-ifeq ($(KERN),cygwin)
+# Cygwin system.
+ifeq ($(SYSTEM),cygwin)
 	# Compiler.
 	CXX = /usr/bin/g++
 	# Installation directory.
 	INSTALL_DIR = /cygdrive/c/opt
 endif
 
-# MinGW specifics.
-ifeq ($(KERN),mingw32)
+# MSYS2/mingw32 system.
+ifeq ($(SYSTEM),mingw32)
 	# Compiler.
-	CXX = /mingw/bin/g++
+	CXX = /mingw32/bin/g++
 	# Installation directory.
 	INSTALL_DIR = /c/opt
 endif
 
-# MinGW-W64 specifics.
-ifeq ($(KERN),mingw64)
+# MSYS2/mingw64 system.
+ifeq ($(SYSTEM),mingw64)
 	# Compiler.
 	CXX = /mingw64/bin/g++
 	# Installation directory.
 	INSTALL_DIR = /c/opt
 endif
 
+# Architecture.
+ARCH = $(SYSTEM)_$(MACHINE)
+
 # Installation directory.
-PREFIX = $(INSTALL_DIR)/iverilog/$(PACKAGE)
+PREFIX = $(INSTALL_DIR)/$(PACKAGE_NAME)/$(PACKAGE)
 EXEC_PREFIX = $(PREFIX)/$(ARCH)
 
 
 all:
+	@echo "ARCH   = $(ARCH)"
+	@echo "PREFIX = $(PREFIX)"
 	@echo ""
 	@echo "## Get Source Code"
 	@echo "make clone"
@@ -90,11 +85,11 @@ all:
 	@echo ""
 	@echo "## Build"
 	@echo "make prepare"
-	@echo "make configure [M=...]"
+	@echo "make configure [M=32]"
 	@echo "make compile [J=...]"
 	@echo ""
 	@echo "## Install"
-	@echo "sudo make install"
+	@echo "[sudo] make install"
 	@echo ""
 	@echo "## Cleanup"
 	@echo "make clean"
