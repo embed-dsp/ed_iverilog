@@ -11,7 +11,8 @@ PACKAGE_NAME = iverilog
 
 # Package version number (git master branch / git tag)
 PACKAGE_VERSION = master
-# PACKAGE_VERSION = v10_2
+#PACKAGE_VERSION = v10_1_1
+#PACKAGE_VERSION = v10_2
 
 PACKAGE = $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 
@@ -118,6 +119,9 @@ pull:
 
 .PHONY: prepare
 prepare:
+	# Discard any local changes
+	cd $(PACKAGE_NAME) && git checkout -- .
+
 	# Checkout specific version
 	cd $(PACKAGE_NAME) && git checkout $(PACKAGE_VERSION)
 	
