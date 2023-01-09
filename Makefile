@@ -132,6 +132,9 @@ pull:
 
 .PHONY: prepare
 prepare:
+	# Discard any local changes
+	cd $(PACKAGE_NAME) && git checkout -- .
+
 	# Checkout specific version
 	cd $(PACKAGE_NAME) && git checkout $(PACKAGE_VERSION)
 	
