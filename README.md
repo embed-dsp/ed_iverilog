@@ -166,8 +166,7 @@ The following system configurations have been tested.
 
 System  | M=                | M=32  
 --------|-------------------|-------------------
-linux   | Fedora-27 64-bit  | Fedora-27 64-bit
-linux   | Fedora-28 64-bit  | Fedora-28 64-bit
+linux   | Fedora-37 64-bit  | Fedora-37 64-bit
 mingw64 | Windows-10 64-bit |
 mingw32 | Windows-10 64-bit |
 cygwin  | **FIXME**         |
@@ -175,7 +174,7 @@ cygwin  | **FIXME**         |
 
 # Prerequisites
 
-## Fedora-27 64-bit | Fedora-28 64-bit
+## Fedora-37 64-bit
 
 ```
 dnf install gcc-c++
