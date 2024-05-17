@@ -24,9 +24,6 @@ endif
 ifeq ($(findstring MINGW64, $(shell uname -s)), MINGW64)
 	SYSTEM = mingw64
 endif
-ifeq ($(findstring CYGWIN, $(shell uname -s)), CYGWIN)
-	SYSTEM = cygwin
-endif
 
 # Determine machine.
 MACHINE = $(shell uname -m)
@@ -49,11 +46,6 @@ CXXFLAGS = -Wall -O2
 
 # Configuration for linux system.
 ifeq ($(SYSTEM),linux)
-	# Compile for 32-bit on a 64-bit machine.
-	ifeq ("$(MACHINE):$(M)","x86_64:32")
-		MACHINE = "x86"
-		CONFIGURE_FLAGS += --with-m32
-	endif
 	# Compiler.
 	CXX = /usr/bin/g++
 	# Installation directory.
@@ -76,20 +68,11 @@ ifeq ($(SYSTEM),mingw64)
 	INSTALL_DIR = /c/opt
 endif
 
-# Configuration for cygwin system.
-ifeq ($(SYSTEM),cygwin)
-	# Compiler.
-	CXX = /usr/bin/g++
-	# Installation directory.
-	INSTALL_DIR = /cygdrive/c/opt
-endif
-
 # Installation directory.
 PREFIX = $(INSTALL_DIR)/$(PACKAGE_NAME)/$(PACKAGE)
 EXEC_PREFIX = $(PREFIX)/$(ARCH)
 
 # ==============================================================================
-
 
 all:
 	@echo "ARCH   = $(ARCH)"
@@ -101,7 +84,7 @@ all:
 	@echo ""
 	@echo "## Build"
 	@echo "make prepare"
-	@echo "make configure [M=32]"
+	@echo "make configure"
 	@echo "make compile [J=...]"
 	@echo ""
 	@echo "## Install"
