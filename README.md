@@ -124,23 +124,6 @@ The build products are installed in the following locations:
     └── ...
 ```
 
-## Windows: Cygwin
-
-```bash
-# Install build products.
-make install
-```
-
-The Icarus Verilog package installs correctly according to the
-[GNU Coding Standards](https://www.gnu.org/prep/standards/standards.html).
-The build products are installed in the following locations:
-
-```bash
-/cygdrive/c/opt/
-└── iverilog/
-    └── ...
-```
-
 
 # Tested System Configurations
 
